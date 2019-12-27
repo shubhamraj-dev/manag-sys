@@ -1,5 +1,5 @@
 import sqlite3
-import datetime
+from datetime import datetime
 
 
 class Schema:
@@ -87,7 +87,7 @@ class TableUser:
         cursor.execute(query, (name, email, password, type))
         self.conn.commit()
         query = """
-                insert into working_data (email,year,month,sick_leaves,casual_leaves,working_hours) values(?, ?, ?,?,? , ?, ?)
+                insert into working_data (email,year,month,sick_leaves,casual_leaves,working_hours) values(?, ?, ?,?,? , ? )
                 """
         bun = datetime.now()
         cursor.execute(query, (email, bun.year, bun.month, 0, 0, 0))

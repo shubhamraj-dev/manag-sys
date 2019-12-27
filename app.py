@@ -5,9 +5,6 @@ from service import ServiceUser
 from functools import wraps
 import sqlite3
 from wtforms import Form, StringField, PasswordField, IntegerField, TextAreaField, validators
-from passlib.hash import sha256_crypt
-# from flask_mysqldb import MySQL
-# from flask_script import Manager
 from datetime import datetime
 
 
@@ -186,11 +183,11 @@ def employeeHome():
             cur.close()
             return redirect(url_for('employeeHome'))
         cur.execute("SELECT * FROM working_data WHERE email = ? and year = ? and month = ? ", (email,year,month))
-        result = cur.fetchall()
+        result = cur.fetchone()
         if result is not None:
-            data = cur.fetchone()
+            data = result
             cur.execute("SELECT * FROM user_details WHERE email = ?", [email])
-            data2 = cur.fetchall()
+            data2 = cur.fetchone()
             if len(data2) == 0:
                 flash('You are yet to be entered into system fully by HR executive ', 'warning')
                 return redirect(url_for('employeeHome'))
